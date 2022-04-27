@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # ---------------------------------
-#       clockword 🍊 © B0-B
-#       Version: 1.0.2
+#       clockword © B0-B
+#       source: https://github.com/B0-B/clockword
+#       Version: 1.0.3
 # ---------------------------------
-import os
+from os import path
 from datetime import datetime
 import tkinter as tk
 from random import choice
@@ -18,15 +19,16 @@ class clockword(tk.Tk):
         self.preps = ['to', 'past', 'close to', 'just after']
         self.hours = ['midnight', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve']
         self.mins = ['five', 'ten', 'twenty']
+        self.greeting = 'hello word.'
         self.display = tk.StringVar()
-        self.display.set('hello.')
+        self.display.set(self.greeting)
         self.refresh = 60
         self.font = font
         self.bg = background
         self.fg = foreground
         self.opacity = opacity
         self.buildUI()  # create gui
-        self.after(1, self.readTime)
+        self.after(2000, self.readTime)
         self.mainloop()
     def buildUI(self):
         self.update()
@@ -46,7 +48,7 @@ class clockword(tk.Tk):
             fg=self.fg, bg=self.bg, height=5, width=30)
         lab.pack()
         try:
-            self.iconbitmap(os.path.dirname(os.path.abspath(__file__))+'/orange.ico')
+            self.iconbitmap(path.dirname(path.abspath(__file__))+'/orange.ico')
         except:
             print_exc()
     def currentTime2Text(self):
