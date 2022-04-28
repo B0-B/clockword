@@ -6,13 +6,14 @@
 #       Version: 1.0.3
 # ---------------------------------
 from os import path
+from time import sleep
 from datetime import datetime
 import tkinter as tk
-from random import choice
+from random import choice, uniform
 from traceback import print_exc
 import ctypes as ct
 class clockword(tk.Tk):
-    def __init__(self, background='#000', foreground='#fff', font=('Times New Roman', 16), opacity=0.7):
+    def __init__(self, background='#000', foreground='#fff', font=('Times New Roman', 16), dpi=70, opacity=0.7):
         tk.Tk.__init__(self)
         self.prefix = ['It is', "We've got", "Now it's"]
         self.frac = ["o'clock", 'half', 'a quarter']
@@ -27,11 +28,14 @@ class clockword(tk.Tk):
         self.bg = background
         self.fg = foreground
         self.opacity = opacity
+        self.dpi = dpi # dots per inch resolution
         self.buildUI()  # create gui
         self.after(2000, self.readTime)
         self.mainloop()
     def buildUI(self):
+        self.tk.call('tk', 'scaling', int(self.dpi/72))
         self.update()
+        self.wm_attributes('-toolwindow', 'True')
         DWMWA_USE_IMMERSIVE_DARK_MODE = 20
         set_window_attribute = ct.windll.dwmapi.DwmSetWindowAttribute
         get_parent = ct.windll.user32.GetParent
@@ -42,7 +46,7 @@ class clockword(tk.Tk):
         set_window_attribute(hwnd, rendering_policy, ct.byref(value),ct.sizeof(value))
         self.title(self.__class__.__name__)
         self.configure(bg=self.bg) 
-        self.geometry('300x150')
+        self.geometry('360x90')
         self.attributes('-alpha', self.opacity)
         lab = tk.Label(self, textvariable=self.display, font=self.font,
             fg=self.fg, bg=self.bg, height=5, width=30)
@@ -92,4 +96,5 @@ class clockword(tk.Tk):
         finally:
             self.after(self.refresh*1000, self.readTime)
 if __name__ == '__main__': 
-    clockword(background='#000', foreground='#fff', font=('Times New Roman', 16), opacity=0.7)
+    clockword(background='#000', foreground='#fff', font=('Times New Roman', 18), 
+            dpi=300, opacity=0.7, style='typewriter')
