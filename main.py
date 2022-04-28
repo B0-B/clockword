@@ -97,4 +97,4 @@ class clockword(tk.Tk):
             self.after(self.refresh*1000, self.readTime)
 if __name__ == '__main__': 
     clockword(background='#000', foreground='#fff', font=('Times New Roman', 18), 
-            dpi=300, opacity=0.7, style='typewriter')
+            dpi=300, opacity=0.7)
